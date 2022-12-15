@@ -1,0 +1,89 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.paiskonteiner {
+  background-image: url('./Canvas/Hills.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 120px;
+  width: 100%;
+  padding-top: 31.94px;
+}
+
+.pais-logo {
+  height: 64px;
+  width: 66.72px;
+  letter-spacing: 0px;
+  color: #0B0B0B;
+}
+
+.pais-nimi {
+  font-size: 33px;
+  text-transform: uppercase;
+  font-weight: 800;
+  width: 100px;
+  line-height: 33px;
+}
+
+.pais-menyy {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16.67px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2.67px;
+  margin-left: auto
+}
+
+.pais-menyy ul {
+  list-style-type: none;
+  justify-content: flex-end;
+}
+
+.pais-menyy li {
+  padding: 0px;
+  margin-left: 10px;
+  min-width: 100px;
+}
+
+.pais-menyy a {
+  color: #0B0B0B;
+}
+
+@media screen and (min-width: 1500px) {
+  .paiskonteiner {
+    background-image: url('./Canvas/Hills@2x.png');
+}
+}
+
+@media screen and (max-width: 480px) {
+  .pais-menyy li{
+    float: none;
+    text-align: center;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 95%;
+  }
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
