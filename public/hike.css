@@ -1,0 +1,159 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-image: url("./Canvas/Hills@2x.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 778px;
+  width: 100%;
+  letter-spacing: 2.25px;
+}
+.paiskonteiner {
+  height: 778px;
+  width: 100%;
+  padding-top: 31.94px;
+}
+
+.pais-logo {
+  height: 64px;
+  width: 66.72px;
+  letter-spacing: 0px;
+  color: #0B0B0B;
+}
+
+.pais-nimi {
+  font-size: 33px;
+  text-transform: uppercase;
+  font-weight: 800;
+  width: 100px;
+  line-height: 33px;
+  letter-spacing: 0;
+}
+
+.pais-menyy {
+  font-size: 16.67px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2.67px;
+  margin-left: auto
+}
+
+.pais-menyy ul {
+  list-style-type: none;
+  justify-content: flex-end;
+}
+
+.pais-menyy li {
+  padding: 0px;
+  margin-left: 10px;
+  min-width: 100px;
+}
+
+.pais-menyy a {
+  color: #0B0B0B;
+}
+
+.form {
+  background-image: url("./Canvas/Hills@2x.png");
+  box-shadow: 10px 30px 60px 10px rgba(0, 0, 0, 0.4);
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 150px;
+}
+
+.mainTitle {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  width: 300px;
+  font-size: 2rem;
+  margin-left: 113px;
+  margin-top: 20px;
+  font-weight: 800;
+}
+.secondTitle {
+  font-family: 'Montserrat', sans-serif;
+  margin-left: 45px;
+  margin-top: 10px;
+  font-weight: 600;
+  color: #5a5353;
+}
+
+.terms {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  margin-left: -4px;
+  color: #5a5353;
+}
+
+.termsConditions{
+  margin-top: 30px;
+  margin-bottom: 27px;
+  margin-left: 60px;
+}
+
+.formEntry {
+  display: block;
+  margin: 30px auto;
+  width: 300px;
+  padding: 10px;
+  border-radius: 2px;
+  border: none;
+  background-color: #b8b8b8;
+}
+.submit {
+  background-color: #2b2a2a;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 800;
+  width: 222px;
+  margin: 0 auto;
+  border-radius: 15px;
+}
+
+.registreerumisPilt {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+h1, p {
+  text-align: center;
+  padding: 10px;
+}
+
+@media screen and (min-width: 1500px) {
+  .paiskonteiner {
+    background-image: url('./Canvas/Hills@2x.png');
+    background: no-repeat;
+}
+}
+
+@media screen and (max-width: 480px) {
+  .pais-menyy li{
+    float: none;
+    text-align: center;
+  }
+  .form {
+    margin-top: 60px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 95%;
+  }
+}

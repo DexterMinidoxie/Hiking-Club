@@ -1,72 +1,142 @@
 const express = require('express')
-const app = express();
-
+const app = express()
 const path = require('path')
-const PORT = process.env.PORT || 3000
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+const PORT = process.env.PORT || 3000 
+const MongoClient = require("mongodb").MongoClient;
+
+const andmebaas = "matkaapp"
+const salasona = "matkaapp"
+const mongoUrl = `mongodb+srv://matkaapp:${salasona}@cluster0.jnp5pgx.mongodb.net/${andmebaas}?retryWrites=true&w=majority`
+const client = new MongoClient(mongoUrl);
 
 const nimed = ['Neti', 'Pepi', 'Aadam', 'Klaabu'];
 
+const registreerumised = []
+
 const matk1 = {
-  nimetus: 'Rabamatk Saaremaal',
-  osalejaid: 12,
-  kuupaev: '2023-05-15',
-  registreerunud: 5,
-  kirjeldus: 'Rabas matkamine bla bla',
-  piltUrl: "./Canvas/backpack2.jpg"
-}
-const matk2 = {
-  nimetus: 'Rattamatk Virumaal',
-  osalejaid: 12,
-  kuupaev: '2023-12-02',
-  registreerunud: 4,
-  kirjeldus: 'Rattaga matkamine bla bla',
-  piltUrl: "./Canvas/backpack1.jpg"
-}
-const matk3 = {
-  nimetus: 'Jalgsimatk Tartumaal',
-  osalejaid: 20,
-  kuupaev: '2023-08-01',
-  registreerunud: 2,
-  kirjeldus: 'Jalgsi matkamine bla bla',
-  piltUrl: "./Canvas/Image.png"
-}
+    nimetus: 'Rabamatk',
+    osalejaid: 5,
+    kuupaev: '2023-05-03',
+    registreerunud: [],
+    kirjeldus: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi, eos voluptatum eum explicabo ipsa dolores ullam ab saepe sequi aliquam suscipit eaque nam deserunt tenetur vero autem molestias eius! Praesentium?',
+    piltUrl: '/Canvas/backpack4.jpg'
+  }
+  
+  const matk2 = {
+    nimetus: 'Rattamatk',
+    osalejaid: 10,
+    kuupaev: '2023-06-03 - 2021-06-10',
+    registreerunud: [],
+    kirjeldus: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi, eos voluptatum eum explicabo ipsa dolores ullam ab saepe sequi aliquam suscipit eaque nam deserunt tenetur vero autem molestias eius! Praesentium?',
+    piltUrl: '/Canvas/backpack3.jpg'
+  }
+  
+  const matk3 = {
+    nimetus: 'Süstamakt',
+    osalejaid: 10,
+    kuupaev: '2023-07-23',
+    registreerunud: [],
+    kirjeldus: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi, eos voluptatum eum explicabo ipsa dolores ullam ab saepe sequi aliquam suscipit eaque nam deserunt tenetur vero autem molestias eius! Praesentium?',
+    piltUrl: '/Canvas/backpack2.jpg'
+  }
+  const matk4 = {
+    nimetus: 'Rattamatk Pärnumaal',
+    osalejaid: 6,
+    kuupaev: '2023-07-03 - 2021-07-10',
+    registreerunud: [],
+    kirjeldus: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi, eos voluptatum eum explicabo ipsa dolores ullam ab saepe sequi aliquam suscipit eaque nam deserunt tenetur vero autem molestias eius! Praesentium?',
+    piltUrl: '/Canvas/backpack1.jpg'
+  }
 
-const matk4 = {
-  nimetus: 'Matk Norras',
-  osalejaid: 4,
-  kuupaev: '2023-08-01',
-  registreerunud: 1,
-  kirjeldus: 'Matkamine matkamine bla bla',
-  piltUrl: "./Canvas/backpack4.jpg"
-}
-
-const matkad = [matk1, matk2, matk3, matk4]
-
-
+  const matkad = [matk1, matk2, matk3, matk4]
+  const matkadelOsalejad = []
+  
 app.get('/test', naitaTest)
 app.get('/', naitaEsilehte)
-app.get('/News', naitaNews)
+app.get('/uudised', naitaUudiseid)
+app.get('/matk/:matk', function(req, res) {
+  console.log('Matka number: ' + req.params.matk)
+  res.render(
+    'matk', 
+    {index: req.params.matk, matk: matkad[req.params.matk-1] }
+  )
+})
+app.get('/registreeru', registreeruMatkale)
 app.get('/Contact', naitaContact)
+app.get('/api/uudised', tagastaUudised)
+app.get('/api/matkadel_osalejad', function(req, res) {
+  res.json(matkadelOsalejad)
+})
 
 
 function naitaTest(req, res) {
-  res.render('test', {nimed: nimed})
+    res.render('test', {nimed: nimed})
 }
 
-function naitaEsilehte(req, res) {
-  res.render('Esileht', {matkad: matkad})
+function naitaEsilehte(req,res) {
+    res.render('esileht', {matkad: matkad})
 }
 
-function naitaNews(req, res) {
-  res.render('News')
+function naitaUudiseid(req,res) {
+    res.render('uudised')
 }
 
-function naitaContact(req, res) {
-  res.render('Contact')
+function naitaContact(req,res) {
+  res.render('contact')
 }
 
-app.listen(PORT, function(){console.log("Hiking club listen port" + PORT)})
+async function registreeruMatkale(req, res) {
+  const uusOsaleja = {
+    nimi: req.query.nimi,
+    email: req.query.email,
+    markus: req.query.markus,
+    index: req.query.index,
+  }
+  matkadelOsalejad.push(uusOsaleja)
+  
+  try {
+    await client.connect();
+    const database = client.db(andmebaas);
+    const osalejad = database.collection("osalejad");
+    const result = await osalejad.insertOne(uusOsaleja)
+    console.log(`Registreerumine lisati andmebaasi _id: ${result.insertedId}`)
+  } finally {
+    await client.close();
+  }
+ 
+
+  res.send('Registreerumine õnnestus!')
+}
+
+function tagastaUudised(req, res) {
+  const uudised = [
+      {
+          tiitel: 'Uudis 1',
+          sisu: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, aliquid nihil. Cum eaque beatae dolorem tenetur, distinctio delectus nesciunt, laboriosam aut rem quia dicta hic? Id ut pariatur saepe delectus.',
+          autor: 'Mina Ise'
+      },
+      {
+          tiitel: 'Uudis 2',
+          sisu: 'See on teine uudis',
+          autor: 'Mina Ise'
+      },
+      {
+          tiitel: 'Uudis 3',
+          sisu: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, aliquid nihil. Cum eaque beatae dolorem tenetur, distinctio delectus nesciunt, laboriosam aut rem quia dicta hic? Id ut pariatur saepe delectus.',
+          autor: 'Keegi Teine'
+      },
+      {
+          tiitel: 'Uudis 4',
+          sisu: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, aliquid nihil. Cum eaque beatae dolorem tenetur, distinctio delectus nesciunt, laboriosam aut rem quia dicta hic? Id ut pariatur saepe delectus.',
+          autor: 'Mina Ise'
+      },
+  ]
+
+  res.json(uudised)
+}
+
+app.listen(PORT, function() {console.log("Matkaäpp kuulab pordil: " + PORT)})
